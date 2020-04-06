@@ -123,6 +123,9 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
+    volumes:
+      - ./support/TLS/nrf.pem:/root/free5gc/support/TLS/nrf.pem
+      - ./support/TLS/nrf.key:/root/free5gc/support/TLS/nrf.key
     entrypoint:
       - ./nrf
 
