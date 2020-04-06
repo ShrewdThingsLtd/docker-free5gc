@@ -17,7 +17,7 @@ RUN DEBIAND_FRONTEND=noninteractive apt-get -y update \
 
 # Get Free5GC
 RUN cd $GOPATH/src \
-    && git clone https://bitbucket.org/free5GC/free5gc-stage-2.git free5gc \
+    && git clone https://github.com/ShrewdThingsLtd/free5gc-stage-2.git free5gc \
     && cd $GOPATH/src/free5gc \
     && chmod +x ./install_env.sh \
     && ./install_env.sh \
@@ -50,5 +50,10 @@ COPY --from=builder /go/src/free5gc/src/upf/build/config/* ./
 WORKDIR /root/free5gc
 COPY --from=builder /go/src/free5gc/bin/* ./
 COPY --from=builder /go/src/free5gc/src/upf/build/bin/* ./
+
+RUN apt-get -y update \
+&& apt-get -y install \
+iproute2 \
+net-tools
 
 CMD [ "/bin/bash" ]

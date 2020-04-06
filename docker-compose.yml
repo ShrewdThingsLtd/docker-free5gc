@@ -5,6 +5,10 @@ networks:
     driver: bridge
   n4:
     driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.230.0.0/24
   n6:
     external: true
   n7:
@@ -56,11 +60,12 @@ services:
 
   smf:
     networks:
-      - default
-      - n4
-      - n7
-      - n11
-      - n10
+      default:
+      n7:
+      n11:
+      n10:
+      n4:
+        ipv4_address: 172.230.0.100 
     image: free5gc-v2
     container_name: free5gc-smf
     deploy:
@@ -69,6 +74,8 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
+    volumes:
+      - ./config/smfcfg.conf:/root/free5gc/config/smfcfg.conf
     entrypoint:
       - ./smf
 
@@ -166,9 +173,10 @@ services:
 
   upf:
     networks:
-      - n6
-      - n3
-      - n4
+      n6:
+      n3:
+      n4:
+        ipv4_address: 172.230.0.110 
     image: free5gc-v2
     container_name: free5gc-upf
     deploy:
@@ -177,5 +185,7 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
+    volumes:
+      - ./config/upfcfg.yaml:/root/free5gc/config/upfcfg.yaml
     entrypoint:
       - ./free5gc-upfd
