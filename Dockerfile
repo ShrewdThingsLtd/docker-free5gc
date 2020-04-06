@@ -36,11 +36,19 @@ RUN cd $GOPATH/src/free5gc/src/upf \
 
 FROM ubuntu:18.04
 
+RUN apt-get -y update \
+&& apt-get -y install \
+libmnl-dev \
+libyaml-dev
+
+WORKDIR /usr/lib
+COPY --from=builder /go/src/free5gc/src/upf/build/utlt_logger/liblogger.so* ./
+COPY --from=builder /go/src/free5gc/src/upf/build/libgtpnl/lib/libgtpnl.so* ./
+WORKDIR /root/free5gc/config/
+COPY --from=builder /go/src/free5gc/config/* ./
+COPY --from=builder /go/src/free5gc/src/upf/build/config/* ./
 WORKDIR /root/free5gc
 COPY --from=builder /go/src/free5gc/bin/* ./
 COPY --from=builder /go/src/free5gc/src/upf/build/bin/* ./
-RUN mkdir config/
-COPY --from=builder /go/src/free5gc/config/* ./config/
-COPY --from=builder /go/src/free5gc/src/upf/build/config/* ./config/
 
 CMD [ "/bin/bash" ]
