@@ -1,14 +1,26 @@
 version: "3.7"
 
 networks:
-  n13:
+  n3:
     driver: bridge
   n4:
     driver: bridge
-  n3:
-    driver: bridge
   n6:
     external: true
+  n7:
+    driver: bridge
+  n8:
+    driver: bridge
+  n10:
+    driver: bridge
+  n11:
+    driver: bridge
+  n12:
+    driver: bridge
+  n13:
+    driver: bridge
+  n15:
+    driver: bridge
   default:
     driver: bridge
 
@@ -28,6 +40,9 @@ services:
   amf:
     networks:
       - default
+      - n11
+      - n12
+      - n15
     image: free5gc-v2
     container_name: free5gc-amf
     deploy:
@@ -43,6 +58,9 @@ services:
     networks:
       - default
       - n4
+      - n7
+      - n11
+      - n10
     image: free5gc-v2
     container_name: free5gc-smf
     deploy:
@@ -57,6 +75,8 @@ services:
   pcf:
     networks:
       - default
+      - n7
+      - n15
     image: free5gc-v2
     container_name: free5gc-pcf
     deploy:
@@ -71,6 +91,8 @@ services:
   ausf:
     networks:
       - default
+      - n8
+      - n12
       - n13
     image: free5gc-v2
     container_name: free5gc-ausf
@@ -115,6 +137,8 @@ services:
     networks:
       - default
       - n13
+      - n10
+      - n8
     image: free5gc-v2
     container_name: free5gc-udm
     deploy:
