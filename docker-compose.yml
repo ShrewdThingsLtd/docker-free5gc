@@ -29,7 +29,7 @@ networks:
     driver: bridge
   n15:
     driver: bridge
-  default:
+  sbi:
     driver: bridge
     ipam:
       driver: default
@@ -39,7 +39,7 @@ networks:
 services:
   mongodb:
     networks:
-      default:
+      sbi:
         ipv4_address: 172.200.0.160 
     image: mongo:4.2
     container_name: free5gc-mongodb
@@ -52,7 +52,7 @@ services:
   
   amf:
     networks:
-      - default
+      - sbi
       - n11
       - n12
       - n15
@@ -69,7 +69,7 @@ services:
 
   smf:
     networks:
-      default:
+      sbi:
       n7:
       n11:
       n10:
@@ -92,7 +92,7 @@ services:
 
   pcf:
     networks:
-      - default
+      - sbi
       - n7
       - n15
     image: free5gc-v2
@@ -108,7 +108,7 @@ services:
 
   ausf:
     networks:
-      - default
+      - sbi
       - n8
       - n12
       - n13
@@ -125,7 +125,7 @@ services:
 
   nrf:
     networks:
-      default:
+      sbi:
         ipv4_address: 172.200.0.180 
     image: free5gc-v2
     container_name: free5gc-nrf
@@ -144,7 +144,7 @@ services:
 
   nssf:
     networks:
-      - default
+      - sbi
     image: free5gc-v2
     container_name: free5gc-nssf
     deploy:
@@ -158,7 +158,7 @@ services:
 
   udm:
     networks:
-      - default
+      - sbi
       - n13
       - n10
       - n8
@@ -175,7 +175,7 @@ services:
 
   udr:
     networks:
-      - default
+      - sbi
     image: free5gc-v2
     container_name: free5gc-udr
     deploy:
