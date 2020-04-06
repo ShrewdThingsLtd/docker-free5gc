@@ -1,6 +1,21 @@
 version: "3.7"
+
+networks:
+  n13:
+    driver: bridge
+  n4:
+    driver: bridge
+  n3:
+    driver: bridge
+  n6:
+    external: true
+  default:
+    driver: bridge
+
 services:
   mongodb:
+    networks:
+      - default
     image: mongo:4.2
     container_name: free5gc-mongodb
     deploy:
@@ -11,6 +26,8 @@ services:
         window: 120s
   
   amf:
+    networks:
+      - default
     image: free5gc-v2
     container_name: free5gc-amf
     deploy:
@@ -23,6 +40,9 @@ services:
       - ./amf
 
   smf:
+    networks:
+      - default
+      - n4
     image: free5gc-v2
     container_name: free5gc-smf
     deploy:
@@ -35,6 +55,8 @@ services:
       - ./smf
 
   pcf:
+    networks:
+      - default
     image: free5gc-v2
     container_name: free5gc-pcf
     deploy:
@@ -47,6 +69,9 @@ services:
       - ./pcf
 
   ausf:
+    networks:
+      - default
+      - n13
     image: free5gc-v2
     container_name: free5gc-ausf
     deploy:
@@ -59,6 +84,8 @@ services:
       - ./ausf
 
   nrf:
+    networks:
+      - default
     image: free5gc-v2
     container_name: free5gc-nrf
     deploy:
@@ -71,6 +98,8 @@ services:
       - ./nrf
 
   nssf:
+    networks:
+      - default
     image: free5gc-v2
     container_name: free5gc-nssf
     deploy:
@@ -83,6 +112,9 @@ services:
       - ./nssf
 
   udm:
+    networks:
+      - default
+      - n13
     image: free5gc-v2
     container_name: free5gc-udm
     deploy:
@@ -95,6 +127,8 @@ services:
       - ./udm
 
   udr:
+    networks:
+      - default
     image: free5gc-v2
     container_name: free5gc-udr
     deploy:
@@ -107,6 +141,10 @@ services:
       - ./udr
 
   upf:
+    networks:
+      - n6
+      - n3
+      - n4
     image: free5gc-v2
     container_name: free5gc-upf
     deploy:
