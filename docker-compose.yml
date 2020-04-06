@@ -64,6 +64,10 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
+    volumes:
+      - ./config/amfcfg.conf:/root/free5gc/config/amfcfg.conf
+      - ./support/TLS/amf.pem:/root/free5gc/support/TLS/amf.pem
+      - ./support/TLS/amf.key:/root/free5gc/support/TLS/amf.key
     entrypoint:
       - ./amf
 
@@ -103,6 +107,10 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
+    volumes:
+      - ./config/pcfcfg.conf:/root/free5gc/config/pcfcfg.conf
+      - ./support/TLS/pcf.pem:/root/free5gc/support/TLS/pcf.pem
+      - ./support/TLS/pcf.key:/root/free5gc/support/TLS/pcf.key
     entrypoint:
       - ./pcf
 
@@ -120,6 +128,10 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
+    volumes:
+      - ./config/ausfcfg.conf:/root/free5gc/config/ausfcfg.conf
+      - ./support/TLS/ausf.pem:/root/free5gc/support/TLS/ausf.pem
+      - ./support/TLS/ausf.key:/root/free5gc/support/TLS/ausf.key
     entrypoint:
       - ./ausf
 
@@ -153,6 +165,10 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
+    volumes:
+      - ./config/nssfcfg.conf:/root/free5gc/config/nssfcfg.conf
+      - ./support/TLS/nssf.pem:/root/free5gc/support/TLS/nssf.pem
+      - ./support/TLS/nssf.key:/root/free5gc/support/TLS/nssf.key
     entrypoint:
       - ./nssf
 
