@@ -74,6 +74,7 @@ services:
   smf:
     networks:
       sbi:
+        ipv4_address: 172.200.0.190 
       n7:
       n11:
       n10:
@@ -186,6 +187,10 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
+    volumes:
+      - ./config/udmcfg.conf:/root/free5gc/config/udmcfg.conf
+      - ./support/TLS/udm.pem:/root/free5gc/support/TLS/udm.pem
+      - ./support/TLS/udm.key:/root/free5gc/support/TLS/udm.key
     entrypoint:
       - ./udm
 
