@@ -39,7 +39,8 @@ networks:
 services:
   mongodb:
     networks:
-      - default
+      default:
+        ipv4_address: 172.200.0.160 
     image: mongo:4.2
     container_name: free5gc-mongodb
     deploy:
@@ -84,6 +85,8 @@ services:
         window: 120s
     volumes:
       - ./config/smfcfg.conf:/root/free5gc/config/smfcfg.conf
+      - ./support/TLS/smf.pem:/root/free5gc/support/TLS/smf.pem
+      - ./support/TLS/smf.key:/root/free5gc/support/TLS/smf.key
     entrypoint:
       - ./smf
 
@@ -181,10 +184,15 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
+    volumes:
+      - ./config/udrcfg.conf:/root/free5gc/config/udrcfg.conf
+      - ./support/TLS/udr.pem:/root/free5gc/support/TLS/udr.pem
+      - ./support/TLS/udr.key:/root/free5gc/support/TLS/udr.key
     entrypoint:
       - ./udr
 
   upf:
+    privileged: true
     networks:
       n6:
       n3:

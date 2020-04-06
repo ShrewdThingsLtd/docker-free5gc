@@ -55,6 +55,7 @@ RUN apt-get -y update \
 && apt-get -y install \
 iproute2 \
 net-tools \
-iputils-ping
+iputils-ping \
+tcpdump
 
 CMD [ "/bin/bash" ]
