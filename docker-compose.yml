@@ -3,12 +3,16 @@ version: "3.7"
 networks:
   n3:
     driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.210.0.0/24
   n4:
     driver: bridge
     ipam:
       driver: default
       config:
-        - subnet: 172.230.0.0/24
+        - subnet: 172.220.0.0/24
   n6:
     external: true
   n7:
@@ -27,6 +31,10 @@ networks:
     driver: bridge
   default:
     driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.200.0.0/24
 
 services:
   mongodb:
@@ -65,7 +73,7 @@ services:
       n11:
       n10:
       n4:
-        ipv4_address: 172.230.0.100 
+        ipv4_address: 172.220.0.190 
     image: free5gc-v2
     container_name: free5gc-smf
     deploy:
@@ -114,7 +122,8 @@ services:
 
   nrf:
     networks:
-      - default
+      default:
+        ipv4_address: 172.200.0.180 
     image: free5gc-v2
     container_name: free5gc-nrf
     deploy:
@@ -124,6 +133,7 @@ services:
         max_attempts: 3
         window: 120s
     volumes:
+      - ./config/nrfcfg.conf:/root/free5gc/config/nrfcfg.conf
       - ./support/TLS/nrf.pem:/root/free5gc/support/TLS/nrf.pem
       - ./support/TLS/nrf.key:/root/free5gc/support/TLS/nrf.key
     entrypoint:
@@ -178,8 +188,9 @@ services:
     networks:
       n6:
       n3:
+        ipv4_address: 172.210.0.170 
       n4:
-        ipv4_address: 172.230.0.110 
+        ipv4_address: 172.220.0.170 
     image: free5gc-v2
     container_name: free5gc-upf
     deploy:

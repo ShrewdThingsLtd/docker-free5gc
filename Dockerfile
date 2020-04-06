@@ -54,6 +54,7 @@ COPY --from=builder /go/src/free5gc/src/upf/build/bin/* ./
 RUN apt-get -y update \
 && apt-get -y install \
 iproute2 \
-net-tools
+net-tools \
+iputils-ping
 
 CMD [ "/bin/bash" ]
