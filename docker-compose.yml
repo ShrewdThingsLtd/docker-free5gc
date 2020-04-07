@@ -70,7 +70,9 @@ services:
       - ./support/TLS/amf.key:/root/free5gc/support/TLS/amf.key
     entrypoint:
       - ./amf
-
+    depends_on:
+      - nrf
+  
   smf:
     networks:
       sbi:
@@ -94,7 +96,10 @@ services:
       - ./support/TLS/smf.key:/root/free5gc/support/TLS/smf.key
     entrypoint:
       - ./smf
-
+    depends_on:
+      - nrf
+      - upf
+  
   pcf:
     networks:
       - sbi
@@ -114,7 +119,9 @@ services:
       - ./support/TLS/pcf.key:/root/free5gc/support/TLS/pcf.key
     entrypoint:
       - ./pcf
-
+    depends_on:
+      - nrf
+  
   ausf:
     networks:
       - sbi
@@ -135,7 +142,9 @@ services:
       - ./support/TLS/ausf.key:/root/free5gc/support/TLS/ausf.key
     entrypoint:
       - ./ausf
-
+    depends_on:
+      - nrf
+  
   nrf:
     networks:
       sbi:
@@ -154,7 +163,9 @@ services:
       - ./support/TLS/nrf.key:/root/free5gc/support/TLS/nrf.key
     entrypoint:
       - ./nrf
-
+    depends_on:
+      - upf
+  
   nssf:
     networks:
       - sbi
@@ -195,7 +206,9 @@ services:
       - ./support/TLS/udm.key:/root/free5gc/support/TLS/udm.key
     entrypoint:
       - ./udm
-
+    depends_on:
+      - nrf
+  
   udr:
     networks:
       - sbi
@@ -213,7 +226,9 @@ services:
       - ./support/TLS/udr.key:/root/free5gc/support/TLS/udr.key
     entrypoint:
       - ./udr
-
+    depends_on:
+      - nrf
+  
   upf:
     privileged: true
     networks:
