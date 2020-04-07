@@ -172,6 +172,8 @@ services:
       - ./support/TLS/nssf.key:/root/free5gc/support/TLS/nssf.key
     entrypoint:
       - ./nssf
+    depends_on:
+      - nrf
 
   udm:
     networks:
