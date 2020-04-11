@@ -1,4 +1,4 @@
-FROM golang:1.12.9-stretch AS builder
+FROM golang:1.12.9-stretch AS free5gc_build
 
 # Disable Go 1.11 Modules
 ENV GO111MODULE=off
@@ -34,29 +34,45 @@ RUN cd $GOPATH/src/free5gc/src/upf \
     && cmake .. \
     && make -j `nproc`
 
+RUN apt-get -y update \
+&& apt-get -y install \
+sudo \
+psmisc
+
+ENV GOROOT=/usr/local/go
+
+LABEL free5gc_dbg=true
 FROM ubuntu:18.04
+LABEL free5gc_dbg=false
 
 RUN apt-get -y update \
 && apt-get -y install \
 libmnl-dev \
-libyaml-dev
-
-WORKDIR /usr/lib
-COPY --from=builder /go/src/free5gc/src/upf/build/utlt_logger/liblogger.so* ./
-COPY --from=builder /go/src/free5gc/src/upf/build/libgtpnl/lib/libgtpnl.so* ./
-WORKDIR /root/free5gc/config/
-COPY --from=builder /go/src/free5gc/config/* ./
-COPY --from=builder /go/src/free5gc/src/upf/build/config/* ./
-WORKDIR /root/free5gc
-COPY --from=builder /go/src/free5gc/bin/* ./
-COPY --from=builder /go/src/free5gc/src/upf/build/bin/* ./
-
-RUN apt-get -y update \
-&& apt-get -y install \
+libyaml-dev \
 iproute2 \
 net-tools \
 iputils-ping \
 tcpdump \
-curl
+curl \
+sudo \
+psmisc
 
+WORKDIR /usr/lib
+COPY --from=free5gc_build /go/src/free5gc/src/upf/build/utlt_logger/liblogger.so* ./
+COPY --from=free5gc_build /go/src/free5gc/src/upf/build/libgtpnl/lib/libgtpnl.so* ./
+WORKDIR /root/free5gc/config/
+COPY --from=free5gc_build /go/src/free5gc/config/* ./
+COPY --from=free5gc_build /go/src/free5gc/src/upf/build/config/* ./
+WORKDIR /root/free5gc
+COPY --from=free5gc_build /go/src/free5gc/bin/* ./
+COPY --from=free5gc_build /go/src/free5gc/src/upf/build/bin/* ./
+
+WORKDIR /root/free5gc
 CMD [ "/bin/bash" ]
+
+##########################
+
+COPY --from=free5gc_build /go/src/free5gc/test.sh /root/free5gc/test.sh
+COPY --from=free5gc_build /go/src/free5gc/src/test/ /root/free5gc/src/upf/build/src/test/
+RUN ln -s /root/free5gc /root/free5gc/src/upf/build/bin
+RUN ln -s /root/free5gc/config /root/free5gc/src/upf/build/config
