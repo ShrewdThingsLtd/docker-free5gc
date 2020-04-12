@@ -272,5 +272,6 @@ services:
     environment:
       - NETS_BLACKLIST=ingress,docker_gwbridge,bridge
       - CONTAINERS_BLACKLIST=netgraph
-    command: /bin/bash -c 'python -m http.server'
-    
+    command: /bin/bash -c 'http-server /opt/netgraph/public'
+    ports:
+      - 18080:8080
