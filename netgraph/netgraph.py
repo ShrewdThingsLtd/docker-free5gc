@@ -9,6 +9,7 @@ import ipaddress
 from dataclasses import dataclass
 from graphviz import Graph
 from graphviz.backend import FORMATS
+from datetime import datetime
 
 # colorlover.scales["12"]["qual"]["Paired"] converted to hex strings
 
@@ -44,6 +45,7 @@ EDGE_MIN_LEN = "8"
 
 BG_COLOR = DISTINCT_COLORMAP["dimgray"]
 CONTAINER_COLOR = DISTINCT_COLORMAP["navajowhite"]
+NOTE_COLOR = DISTINCT_COLORMAP["lightgreen"]
 COLORS = [
     DISTINCT_COLORMAP["saddlebrown"], 
     DISTINCT_COLORMAP["darkgreen"], 
@@ -230,6 +232,15 @@ def generate_graph(verbose: bool, file: str):
         g = Graph(comment="Docker Network Graph", engine="sfdp", format=ext[1:], graph_attr=dict(splines="true",bgcolor=BG_COLOR,rankdir="LR"))
     else:
         g = Graph(comment="Docker Network Graph", engine="sfdp", graph_attr=dict(splines="true",bgcolor=BG_COLOR,rankdir="LR"))
+
+    g.node(f"infobox",
+           shape="note",
+           label=datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3],
+           fontsize=FONT_SIZE,
+           margin="0.20,0.05",
+           fillcolor=NOTE_COLOR,
+           style="filled"
+           )
 
     for _, network in networks.items():
         draw_network(g, network)

@@ -65,3 +65,9 @@ RUN cp $GOPATH/src/free5gc/test.sh ./
 
 WORKDIR /root/free5gc
 RUN sudo chmod +x ./test.sh
+
+RUN apt-get -y update \
+&& apt-get -y install \
+iproute2 \
+tcpdump \
+net-tools

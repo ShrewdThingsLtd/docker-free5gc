@@ -62,10 +62,11 @@ services:
   
   amf:
     networks:
-      - sbi
-      - n11
-      - n12
-      - n15
+      sbi:
+        ipv4_address: 172.200.0.150
+      n11:
+      n12:
+      n15:
     image: free5gc:v2
     container_name: amf
     # deploy:
@@ -112,9 +113,10 @@ services:
   
   pcf:
     networks:
-      - sbi
-      - n7
-      - n15
+      sbi:
+        ipv4_address: 172.200.0.120
+      n7:
+      n15:
     image: free5gc:v2
     container_name: pcf
     # deploy:
@@ -134,10 +136,11 @@ services:
   
   ausf:
     networks:
-      - sbi
-      - n8
-      - n12
-      - n13
+      sbi:
+        ipv4_address: 172.200.0.140
+      n8:
+      n12:
+      n13:
     image: free5gc:v2
     container_name: ausf
     # deploy:
@@ -178,7 +181,8 @@ services:
   
   nssf:
     networks:
-      - sbi
+      sbi:
+        ipv4_address: 172.200.0.130
     image: free5gc:v2
     container_name: nssf
     # deploy:
@@ -198,10 +202,11 @@ services:
 
   udm:
     networks:
-      - sbi
-      - n13
-      - n10
-      - n8
+      sbi:
+        ipv4_address: 172.200.0.110
+      n13:
+      n10:
+      n8:
     image: free5gc:v2
     container_name: udm
     # deploy:
@@ -217,11 +222,13 @@ services:
     entrypoint:
       - ./udm
     depends_on:
+      - udr
       - nrf
   
   udr:
     networks:
-      - sbi
+      sbi:
+        ipv4_address: 172.200.0.100
     image: free5gc:v2
     container_name: udr
     # deploy:
@@ -259,7 +266,9 @@ services:
       - ./config/upfcfg.yaml:/root/free5gc/config/upfcfg.yaml
     entrypoint:
       - ./free5gc-upfd
-  
+    depends_on:
+      - mongodb
+    
   netgraph:
     privileged: true
     networks:
