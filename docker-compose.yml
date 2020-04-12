@@ -53,12 +53,12 @@ services:
         ipv4_address: 172.200.0.160
     image: mongo:4.2
     container_name: mongodb
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+    # deploy:
+    #   restart_policy:
+    #     condition: on-failure
+    #     delay: 5s
+    #     max_attempts: 3
+    #     window: 120s
   
   amf:
     networks:
@@ -68,12 +68,12 @@ services:
       - n15
     image: free5gc:v2
     container_name: amf
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+    # deploy:
+    #   restart_policy:
+    #     condition: on-failure
+    #     delay: 5s
+    #     max_attempts: 3
+    #     window: 120s
     volumes:
       - ./config/amfcfg.conf:/root/free5gc/config/amfcfg.conf
       - ./support/TLS/amf.pem:/root/free5gc/support/TLS/amf.pem
@@ -94,12 +94,12 @@ services:
         ipv4_address: 172.220.0.190
     image: free5gc:v2
     container_name: smf
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+    # deploy:
+    #   restart_policy:
+    #     condition: on-failure
+    #     delay: 5s
+    #     max_attempts: 3
+    #     window: 120s
     volumes:
       - ./config/smfcfg.conf:/root/free5gc/config/smfcfg.conf
       - ./support/TLS/smf.pem:/root/free5gc/support/TLS/smf.pem
@@ -117,12 +117,12 @@ services:
       - n15
     image: free5gc:v2
     container_name: pcf
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+    # deploy:
+    #   restart_policy:
+    #     condition: on-failure
+    #     delay: 5s
+    #     max_attempts: 3
+    #     window: 120s
     volumes:
       - ./config/pcfcfg.conf:/root/free5gc/config/pcfcfg.conf
       - ./support/TLS/pcf.pem:/root/free5gc/support/TLS/pcf.pem
@@ -140,12 +140,12 @@ services:
       - n13
     image: free5gc:v2
     container_name: ausf
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+    # deploy:
+    #   restart_policy:
+    #     condition: on-failure
+    #     delay: 5s
+    #     max_attempts: 3
+    #     window: 120s
     volumes:
       - ./config/ausfcfg.conf:/root/free5gc/config/ausfcfg.conf
       - ./support/TLS/ausf.pem:/root/free5gc/support/TLS/ausf.pem
@@ -161,12 +161,12 @@ services:
         ipv4_address: 172.200.0.180
     image: free5gc:v2
     container_name: nrf
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+    # deploy:
+    #   restart_policy:
+    #     condition: on-failure
+    #     delay: 5s
+    #     max_attempts: 3
+    #     window: 120s
     volumes:
       - ./config/nrfcfg.conf:/root/free5gc/config/nrfcfg.conf
       - ./support/TLS/nrf.pem:/root/free5gc/support/TLS/nrf.pem
@@ -181,12 +181,12 @@ services:
       - sbi
     image: free5gc:v2
     container_name: nssf
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+    # deploy:
+    #   restart_policy:
+    #     condition: on-failure
+    #     delay: 5s
+    #     max_attempts: 3
+    #     window: 120s
     volumes:
       - ./config/nssfcfg.conf:/root/free5gc/config/nssfcfg.conf
       - ./support/TLS/nssf.pem:/root/free5gc/support/TLS/nssf.pem
@@ -204,12 +204,12 @@ services:
       - n8
     image: free5gc:v2
     container_name: udm
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+    # deploy:
+    #   restart_policy:
+    #     condition: on-failure
+    #     delay: 5s
+    #     max_attempts: 3
+    #     window: 120s
     volumes:
       - ./config/udmcfg.conf:/root/free5gc/config/udmcfg.conf
       - ./support/TLS/udm.pem:/root/free5gc/support/TLS/udm.pem
@@ -224,12 +224,12 @@ services:
       - sbi
     image: free5gc:v2
     container_name: udr
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+    # deploy:
+    #   restart_policy:
+    #     condition: on-failure
+    #     delay: 5s
+    #     max_attempts: 3
+    #     window: 120s
     volumes:
       - ./config/udrcfg.conf:/root/free5gc/config/udrcfg.conf
       - ./support/TLS/udr.pem:/root/free5gc/support/TLS/udr.pem
@@ -249,12 +249,12 @@ services:
         ipv4_address: 172.220.0.170
     image: free5gc:v2
     container_name: upf
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+    # deploy:
+    #   restart_policy:
+    #     condition: on-failure
+    #     delay: 5s
+    #     max_attempts: 3
+    #     window: 120s
     volumes:
       - ./config/upfcfg.yaml:/root/free5gc/config/upfcfg.yaml
     entrypoint:
