@@ -2,12 +2,14 @@ version: "3.7"
 
 networks:
   n3:
+    name: n3
     driver: bridge
     ipam:
       driver: default
       config:
         - subnet: 172.210.0.0/24
   n4:
+    name: n4
     driver: bridge
     ipam:
       driver: default
@@ -16,20 +18,28 @@ networks:
   n6:
     external: true
   n7:
+    name: n7
     driver: bridge
   n8:
+    name: n8
     driver: bridge
   n10:
+    name: n10
     driver: bridge
   n11:
+    name: n11
     driver: bridge
   n12:
+    name: n12
     driver: bridge
   n13:
+    name: n13
     driver: bridge
   n15:
+    name: n15
     driver: bridge
   sbi:
+    name: sbi
     driver: bridge
     ipam:
       driver: default
@@ -40,9 +50,9 @@ services:
   mongodb:
     networks:
       sbi:
-        ipv4_address: 172.200.0.160 
+        ipv4_address: 172.200.0.160
     image: mongo:4.2
-    container_name: free5gc-mongodb
+    container_name: mongodb
     deploy:
       restart_policy:
         condition: on-failure
@@ -56,8 +66,8 @@ services:
       - n11
       - n12
       - n15
-    image: free5gc-v2
-    container_name: free5gc-amf
+    image: free5gc:v2
+    container_name: amf
     deploy:
       restart_policy:
         condition: on-failure
@@ -76,14 +86,14 @@ services:
   smf:
     networks:
       sbi:
-        ipv4_address: 172.200.0.190 
+        ipv4_address: 172.200.0.190
       n7:
       n11:
       n10:
       n4:
-        ipv4_address: 172.220.0.190 
-    image: free5gc-v2
-    container_name: free5gc-smf
+        ipv4_address: 172.220.0.190
+    image: free5gc:v2
+    container_name: smf
     deploy:
       restart_policy:
         condition: on-failure
@@ -105,8 +115,8 @@ services:
       - sbi
       - n7
       - n15
-    image: free5gc-v2
-    container_name: free5gc-pcf
+    image: free5gc:v2
+    container_name: pcf
     deploy:
       restart_policy:
         condition: on-failure
@@ -128,8 +138,8 @@ services:
       - n8
       - n12
       - n13
-    image: free5gc-v2
-    container_name: free5gc-ausf
+    image: free5gc:v2
+    container_name: ausf
     deploy:
       restart_policy:
         condition: on-failure
@@ -148,9 +158,9 @@ services:
   nrf:
     networks:
       sbi:
-        ipv4_address: 172.200.0.180 
-    image: free5gc-v2
-    container_name: free5gc-nrf
+        ipv4_address: 172.200.0.180
+    image: free5gc:v2
+    container_name: nrf
     deploy:
       restart_policy:
         condition: on-failure
@@ -169,8 +179,8 @@ services:
   nssf:
     networks:
       - sbi
-    image: free5gc-v2
-    container_name: free5gc-nssf
+    image: free5gc:v2
+    container_name: nssf
     deploy:
       restart_policy:
         condition: on-failure
@@ -192,8 +202,8 @@ services:
       - n13
       - n10
       - n8
-    image: free5gc-v2
-    container_name: free5gc-udm
+    image: free5gc:v2
+    container_name: udm
     deploy:
       restart_policy:
         condition: on-failure
@@ -212,8 +222,8 @@ services:
   udr:
     networks:
       - sbi
-    image: free5gc-v2
-    container_name: free5gc-udr
+    image: free5gc:v2
+    container_name: udr
     deploy:
       restart_policy:
         condition: on-failure
@@ -234,11 +244,11 @@ services:
     networks:
       n6:
       n3:
-        ipv4_address: 172.210.0.170 
+        ipv4_address: 172.210.0.170
       n4:
-        ipv4_address: 172.220.0.170 
-    image: free5gc-v2
-    container_name: free5gc-upf
+        ipv4_address: 172.220.0.170
+    image: free5gc:v2
+    container_name: upf
     deploy:
       restart_policy:
         condition: on-failure
@@ -249,3 +259,14 @@ services:
       - ./config/upfcfg.yaml:/root/free5gc/config/upfcfg.yaml
     entrypoint:
       - ./free5gc-upfd
+  
+  netgraph:
+    privileged: true
+    networks:
+      - sbi
+    image: netgraph
+    container_name: netgraph
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: /bin/bash -c 'python -m http.server'
+    
