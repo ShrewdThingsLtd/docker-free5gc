@@ -268,5 +268,9 @@ services:
     container_name: netgraph
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./netgraph/netgraph.py:/opt/netgraph/netgraph.py
+    environment:
+      - NETS_BLACKLIST=ingress,docker_gwbridge,bridge
+      - CONTAINERS_BLACKLIST=netgraph
     command: /bin/bash -c 'python -m http.server'
     
