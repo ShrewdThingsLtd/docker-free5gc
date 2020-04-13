@@ -13,7 +13,11 @@ autoconf \
 libtool \
 pkg-config \
 libmnl-dev \
-libyaml-dev
+libyaml-dev \
+iproute2 \
+tcpdump \
+net-tools \
+gdb
 
 SHELL ["/bin/bash", "-c"]
 RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
@@ -34,6 +38,9 @@ WORKDIR $GOPATH/src
 ARG FREE5GC_URL='https://github.com/ShrewdThingsLtd/free5gc-stage-2.git'
 RUN git clone $FREE5GC_URL free5gc
 WORKDIR $GOPATH/src/free5gc
+
+ARG FREE5GC_FETCH
+RUN git pull origin master
 RUN chmod +x ./install_env.sh
 RUN ./install_env.sh
 RUN tar -C $GOPATH -zxvf ./free5gc_libs.tar.gz
@@ -49,8 +56,9 @@ RUN ls -ltr ./bin
 
 RUN go get github.com/sirupsen/logrus
 WORKDIR $GOPATH/src/free5gc/src/upf/build
-RUN cmake ../
-RUN make -j $(nproc)
+ARG UPF_CMAKE_BUILD_TYPE
+RUN cmake -DCMAKE_BUILD_TYPE=$UPF_CMAKE_BUILD_TYPE ../
+RUN make VERBOSE=1 -j $(nproc)
 
 WORKDIR /usr/lib
 RUN cp $GOPATH/src/free5gc/src/upf/build/utlt_logger/liblogger.so* ./
@@ -65,9 +73,3 @@ RUN cp $GOPATH/src/free5gc/test.sh ./
 
 WORKDIR /root/free5gc
 RUN sudo chmod +x ./test.sh
-
-RUN apt-get -y update \
-&& apt-get -y install \
-iproute2 \
-tcpdump \
-net-tools

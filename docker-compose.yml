@@ -278,9 +278,10 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./netgraph/netgraph.py:/opt/netgraph/netgraph.py
+      - ./netgraph/netgraph.js:/opt/netgraph/netgraph.js
     environment:
       - NETS_BLACKLIST=ingress,docker_gwbridge,bridge
       - CONTAINERS_BLACKLIST=netgraph
-    command: /bin/bash -c 'http-server /opt/netgraph/public'
+    command: /bin/bash -c 'nodejs /opt/netgraph/netgraph.js'
     ports:
       - 18080:8080

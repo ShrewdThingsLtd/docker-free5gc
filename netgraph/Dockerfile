@@ -21,5 +21,5 @@ ENV LANG=C.UTF-8
 RUN pipenv install --system --deploy
 COPY ./netgraph.py ./netgraph.py
 COPY ./public/ ./public/
-RUN echo 'python /opt/netgraph/netgraph.py > /opt/netgraph/public/netgraph.svg' > /usr/local/bin/netgraph-draw
-RUN chmod +x /usr/local/bin/netgraph-draw
+RUN npm install node-static
+COPY ./netgraph.js ./netgraph.js
