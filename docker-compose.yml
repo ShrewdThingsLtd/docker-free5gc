@@ -55,6 +55,7 @@ networks:
 
 services:
   mongodb:
+    privileged: true
     networks:
       sbi:
         ipv4_address: 172.200.0.160
@@ -66,6 +67,7 @@ services:
     #     delay: 5s
     #     max_attempts: 3
     #     window: 120s
+    command: /bin/bash -c 'service tcpdumpd start; mongod'
   
   amf:
     networks:

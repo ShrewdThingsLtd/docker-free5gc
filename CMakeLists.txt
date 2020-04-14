@@ -10,6 +10,7 @@ if(NOT Docker_EXECUTABLE)
 endif()
 
 add_custom_target(free5gc_img ALL
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_LIST_DIR}/daemons/tcpdump.daemon ${CMAKE_CURRENT_LIST_DIR}
     COMMAND
         ${Docker_EXECUTABLE} build
             --tag free5gc:${FREE5GC_VERSION}

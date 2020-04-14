@@ -70,8 +70,6 @@ WORKDIR /root/free5gc
 RUN cp $GOPATH/src/free5gc/bin/* ./
 RUN cp $GOPATH/src/free5gc/src/upf/build/bin/* ./
 RUN cp $GOPATH/src/free5gc/test.sh ./
-
-WORKDIR /root/free5gc
 RUN sudo chmod +x ./test.sh
 
 RUN apt-get -y update \
@@ -79,3 +77,9 @@ RUN apt-get -y update \
 python3 \
 socat \
 vim
+
+COPY ./tcpdump.daemon /etc/init.d/tcpdumpd
+RUN update-rc.d tcpdumpd defaults
+RUN update-rc.d tcpdumpd enable
+
+WORKDIR /root/free5gc
