@@ -59,6 +59,8 @@ services:
     networks:
       sbi:
         ipv4_address: 172.200.0.160
+    ports:
+      - 37017:27017
     image: mongodb:local
     container_name: mongodb
     command: /bin/bash -c 'service tcpdumpd start; mongod --bind_ip 172.200.0.160'
@@ -97,8 +99,7 @@ services:
       - ./config/smfcfg.conf:/root/free5gc/config/smfcfg.conf
       - ./support/TLS/smf.pem:/root/free5gc/support/TLS/smf.pem
       - ./support/TLS/smf.key:/root/free5gc/support/TLS/smf.key
-    entrypoint:
-      - ./smf
+    command: /bin/bash -c 'service tcpdumpd start; ./smf'
     depends_on:
       - nrf
       - upf
@@ -148,8 +149,7 @@ services:
       - ./config/nrfcfg.conf:/root/free5gc/config/nrfcfg.conf
       - ./support/TLS/nrf.pem:/root/free5gc/support/TLS/nrf.pem
       - ./support/TLS/nrf.key:/root/free5gc/support/TLS/nrf.key
-    entrypoint:
-      - ./nrf
+    command: /bin/bash -c 'service tcpdumpd start; ./nrf'
     depends_on:
       - upf
   
@@ -214,8 +214,7 @@ services:
     container_name: upf
     volumes:
       - ./config/upfcfg.yaml:/root/free5gc/config/upfcfg.yaml
-    entrypoint:
-      - ./free5gc-upfd
+    command: /bin/bash -c 'service tcpdumpd start; ./free5gc-upfd'
     depends_on:
       - mongodb
   

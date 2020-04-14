@@ -3,7 +3,6 @@ FROM ubuntu:18.04
 RUN DEBIAND_FRONTEND=noninteractive
 RUN apt-get -y update \
 && apt-get -y install \
-mongodb \
 wget \
 git \
 sudo \
@@ -17,6 +16,9 @@ libyaml-dev \
 iproute2 \
 tcpdump \
 net-tools \
+python3 \
+socat \
+vim \
 gdb
 
 SHELL ["/bin/bash", "-c"]
@@ -71,12 +73,6 @@ RUN cp $GOPATH/src/free5gc/bin/* ./
 RUN cp $GOPATH/src/free5gc/src/upf/build/bin/* ./
 RUN cp $GOPATH/src/free5gc/test.sh ./
 RUN sudo chmod +x ./test.sh
-
-RUN apt-get -y update \
-&& apt-get -y install \
-python3 \
-socat \
-vim
 
 COPY ./tcpdump.daemon /etc/init.d/tcpdumpd
 RUN update-rc.d tcpdumpd defaults
