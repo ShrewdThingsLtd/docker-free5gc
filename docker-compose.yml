@@ -1,6 +1,13 @@
 version: "3.7"
 
 networks:
+  n2:
+    name: n2
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.230.0.0/24
   n3:
     name: n3
     driver: bridge
@@ -51,7 +58,7 @@ services:
     networks:
       sbi:
         ipv4_address: 172.200.0.160
-    image: mongo:4.2
+    image: mongodb:local
     container_name: mongodb
     # deploy:
     #   restart_policy:
@@ -64,6 +71,8 @@ services:
     networks:
       sbi:
         ipv4_address: 172.200.0.150
+      n2:
+        ipv4_address: 172.230.0.150
       n11:
       n12:
       n15:
@@ -268,7 +277,39 @@ services:
       - ./free5gc-upfd
     depends_on:
       - mongodb
-    
+  
+  ran:
+    privileged: true
+    networks:
+      n2:
+        ipv4_address: 172.230.0.90
+      n3:
+        ipv4_address: 172.210.0.90
+    image: free5gc:v2
+    container_name: ran
+    # deploy:
+    #   restart_policy:
+    #     condition: on-failure
+    #     delay: 5s
+    #     max_attempts: 3
+    #     window: 120s
+    volumes:
+      - ./config/free5GC.conf:/home/docker/go/src/free5gc/config/free5GC.conf
+    command: /bin/bash -c 'python3 -m http.server'
+    working_dir: /home/docker/go/src/free5gc/src/test
+    environment:
+      - FREE5GC_AMF_IP=172.230.0.150
+      - FREE5GC_RAN_IP=172.230.0.90
+      - FREE5GC_ENB_IP=172.210.0.90
+      - FREE5GC_UPF_IP=172.210.0.170
+      - FREE5GC_AMF_PORT=38412
+      - FREE5GC_RAN_PORT=9487
+      - FREE5GC_GNB_PORT=2152
+      - FREE5GC_UPF_PORT=2152
+    depends_on:
+      - amf
+      - upf
+        
   netgraph:
     privileged: true
     networks:

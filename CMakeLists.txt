@@ -20,6 +20,16 @@ add_custom_target(free5gc_img ALL
     VERBATIM
 )
 
+add_custom_target(mongodb_img ALL
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_LIST_DIR}/daemons/tcpdump.daemon ${CMAKE_CURRENT_LIST_DIR}/mongodb
+    COMMAND
+        ${Docker_EXECUTABLE} build
+            --tag mongodb:local
+            --file ${CMAKE_CURRENT_LIST_DIR}/mongodb/Dockerfile
+            ${CMAKE_CURRENT_LIST_DIR}/mongodb
+    VERBATIM
+)
+
 add_custom_target(netgraph_img ALL
     COMMAND
         ${Docker_EXECUTABLE} build
