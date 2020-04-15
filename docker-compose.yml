@@ -117,8 +117,7 @@ services:
       - ./config/pcfcfg.conf:/root/free5gc/config/pcfcfg.conf
       - ./support/TLS/pcf.pem:/root/free5gc/support/TLS/pcf.pem
       - ./support/TLS/pcf.key:/root/free5gc/support/TLS/pcf.key
-    entrypoint:
-      - ./pcf
+    command: /bin/bash -c 'service tcpdumpd start; ./pcf'
     depends_on:
       - nrf
   
@@ -135,8 +134,7 @@ services:
       - ./config/ausfcfg.conf:/root/free5gc/config/ausfcfg.conf
       - ./support/TLS/ausf.pem:/root/free5gc/support/TLS/ausf.pem
       - ./support/TLS/ausf.key:/root/free5gc/support/TLS/ausf.key
-    entrypoint:
-      - ./ausf
+    command: /bin/bash -c 'service tcpdumpd start; ./ausf'
     depends_on:
       - nrf
   
@@ -164,8 +162,7 @@ services:
       - ./config/nssfcfg.conf:/root/free5gc/config/nssfcfg.conf
       - ./support/TLS/nssf.pem:/root/free5gc/support/TLS/nssf.pem
       - ./support/TLS/nssf.key:/root/free5gc/support/TLS/nssf.key
-    entrypoint:
-      - ./nssf
+    command: /bin/bash -c 'service tcpdumpd start; ./nssf'
     depends_on:
       - nrf
 
@@ -182,8 +179,7 @@ services:
       - ./config/udmcfg.conf:/root/free5gc/config/udmcfg.conf
       - ./support/TLS/udm.pem:/root/free5gc/support/TLS/udm.pem
       - ./support/TLS/udm.key:/root/free5gc/support/TLS/udm.key
-    entrypoint:
-      - ./udm
+    command: /bin/bash -c 'service tcpdumpd start; ./udm'
     depends_on:
       - udr
       - nrf
@@ -198,8 +194,7 @@ services:
       - ./config/udrcfg.conf:/root/free5gc/config/udrcfg.conf
       - ./support/TLS/udr.pem:/root/free5gc/support/TLS/udr.pem
       - ./support/TLS/udr.key:/root/free5gc/support/TLS/udr.key
-    entrypoint:
-      - ./udr
+    command: /bin/bash -c 'service tcpdumpd start; ./udr'
     depends_on:
       - nrf
   

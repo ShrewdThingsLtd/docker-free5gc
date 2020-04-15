@@ -22,10 +22,12 @@ libpcap-dev \
 libgcrypt20-dev \
 cmake
 
-mkdir -p /tmp/wireshark-$WIRESHARK_VER
-cd /tmp/wireshark-$WIRESHARK_VER
+mkdir -p ./wireshark-$WIRESHARK_VER
+cd ./wireshark-$WIRESHARK_VER
+rm ./wireshark-$WIRESHARK_VER.tar.xz
 wget https://1.eu.dl.wireshark.org/src/wireshark-$WIRESHARK_VER.tar.xz
 tar xvf ./wireshark-$WIRESHARK_VER.tar.xz
+cd ./wireshark-$WIRESHARK_VER
 mkdir ./build
 cd ./build
 cmake ..
