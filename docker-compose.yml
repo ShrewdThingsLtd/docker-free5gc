@@ -80,6 +80,7 @@ services:
       - ./config/amfcfg.conf:/root/free5gc/config/amfcfg.conf
       - ./support/TLS/amf.pem:/root/free5gc/support/TLS/amf.pem
       - ./support/TLS/amf.key:/root/free5gc/support/TLS/amf.key
+      - ./amf/test/sm_context_test.go:/home/docker/go/src/free5gc/src/amf/amf_consumer/sm_context_test.go
     command: /bin/bash -c 'service tcpdumpd start; ./amf'
     depends_on:
       - nrf
